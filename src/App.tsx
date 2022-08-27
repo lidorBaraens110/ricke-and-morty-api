@@ -1,4 +1,4 @@
-import CharacterFromEarth from "./page/Charater";
+import CharacterFromEarth from "./page/Character/Charater";
 
 function App() {
   return <CharacterFromEarth />;

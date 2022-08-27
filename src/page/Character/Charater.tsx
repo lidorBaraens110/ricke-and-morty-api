@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import { getUnpopularCharacterFromEarth } from "../helper";
-import { ICharacterResults } from "../model/axiosModel";
+import Loader from "../../component/Loader/loader";
+import { getUnpopularCharacterFromEarth } from "../../helper";
+import { ICharacterResults } from "../../model/axiosModel";
+import "./character.css";
 
 const CharacterFromEarth = (): JSX.Element => {
   const [earthCharacter, setEarthCharacter] = useState<ICharacterResults>();
@@ -13,9 +15,11 @@ const CharacterFromEarth = (): JSX.Element => {
   }, []);
 
   return (
-    <div>
+    <div className="container">
       <h1>hello character</h1>
-      <ul>{earthCharacter?.name}</ul>
+      <div className="wrap-table">
+        {earthCharacter ? <ul>{earthCharacter?.name}</ul> : <Loader />}
+      </div>
     </div>
   );
 };
