@@ -6,8 +6,6 @@ export interface IFetchCharacters {
     prev: string | null;
   };
   results: ICharacterResults[];
-  url: string;
-  created: Date;
 }
 interface IOriginCharacter {
   name: string;
@@ -25,6 +23,8 @@ export interface ICharacterResults {
   location: ILocationCharacter;
   image: string;
   episode: string[];
+  url: string;
+  created: Date;
 }
 
 export interface IFetchLocationById {
