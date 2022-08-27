@@ -10,7 +10,8 @@ const CharacterFromEarth = (): JSX.Element => {
   useEffect(() => {
     const fetchData = async () => {
       setEarthCharacter(await getUnpopularCharacterFromEarth());
-      setLoading(true);
+      console.log("gere");
+      setLoading(false);
     };
     fetchData();
   }, []);
@@ -19,7 +20,7 @@ const CharacterFromEarth = (): JSX.Element => {
     <div className="container">
       <h1>hello character</h1>
       <div className="wrap-table">
-        {loading ? (
+        {!loading ? (
           earthCharacter ? (
             <ul>{earthCharacter?.name}</ul>
           ) : (
