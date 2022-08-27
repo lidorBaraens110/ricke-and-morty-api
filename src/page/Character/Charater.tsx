@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import CharacterTable from "../../component/CharacterTable/CharacterTable";
-import Loader from "../../component/Loader/loader";
+import Loader from "../../component/Loader/Loaderr";
 import { getUnpopularCharacterFromEarth } from "../../helper";
 import { IUnpopularCharacterFromEarth } from "../../model/characterModel";
 import "./character.css";

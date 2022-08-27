@@ -1,5 +1,5 @@
 import { IUnpopularCharacterFromEarth } from "../../model/characterModel";
-import "./character.css";
+import "./characterTable.css";
 
 const CharacterTable = (
   earthCharacter: IUnpopularCharacterFromEarth
