@@ -6,10 +6,11 @@ import "./character.css";
 
 const CharacterFromEarth = (): JSX.Element => {
   const [earthCharacter, setEarthCharacter] = useState<ICharacterResults>();
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       setEarthCharacter(await getUnpopularCharacterFromEarth());
+      setLoading(true);
     };
     fetchData();
   }, []);
@@ -18,7 +19,15 @@ const CharacterFromEarth = (): JSX.Element => {
     <div className="container">
       <h1>hello character</h1>
       <div className="wrap-table">
-        {earthCharacter ? <ul>{earthCharacter?.name}</ul> : <Loader />}
+        {loading ? (
+          earthCharacter ? (
+            <ul>{earthCharacter?.name}</ul>
+          ) : (
+            "fetch data failed"
+          )
+        ) : (
+          <Loader />
+        )}
       </div>
     </div>
   );
