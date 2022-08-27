@@ -1,12 +1,7 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import CharacterFromEarth from "./page/Charater";
 
 function App() {
-  return (
-    <div className="App">
-    </div>
-  );
+  return <CharacterFromEarth />;
 }
 
 export default App;
