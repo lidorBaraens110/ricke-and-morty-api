@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import CharacterTable from "../../component/CharacterTable/CharacterTable";
-import Loader from "../../component/Loader/Loaderr";
+import CharacterTable from "../CharacterTable/CharacterTable";
+import Loader from "../Loader/Loaderr";
 import { getUnpopularCharacterFromEarth } from "../../helper";
 import { IUnpopularCharacterFromEarth } from "../../model/characterModel";
 import "./character.css";
@@ -18,7 +18,7 @@ const CharacterFromEarth = (): JSX.Element => {
   }, []);
 
   return (
-    <div className="container">
+    <>
       <h1>hello character</h1>
       <div className="wrap-table">
         {!loading ? (
@@ -31,7 +31,7 @@ const CharacterFromEarth = (): JSX.Element => {
           <Loader />
         )}
       </div>
-    </div>
+    </>
   );
 };
 

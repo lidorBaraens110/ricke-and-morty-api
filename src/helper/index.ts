@@ -1,7 +1,10 @@
-import { getCharacterByPage } from "../api";
+import { getCharacterByName, getCharacterByPage } from "../api";
 import { ICharacterResults, IFetchLocationById } from "../model/axiosModel";
 import axios from "axios";
-import { IUnpopularCharacterFromEarth } from "../model/characterModel";
+import {
+  IBarState,
+  IUnpopularCharacterFromEarth,
+} from "../model/characterModel";
 
 export const getUnpopularCharacterFromEarth =
   async (): Promise<IUnpopularCharacterFromEarth> => {
@@ -51,5 +54,32 @@ const getCharactersFromEarth = async (
     return earthCharacters;
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const fetchCharacterData = async (
+  charactersArr: string[]
+): Promise<IBarState[] | []> => {
+  try {
+    return await Promise.all(
+      charactersArr.map(async (name) => {
+        const { data } = await getCharacterByName(name);
+        return {
+          img: data.results[0].image,
+          name,
+          episodeLength: [
+            ...new Set(
+              data?.results?.reduce((acc: string[], val) => {
+                acc.push(...val.episode);
+                return acc;
+              }, [])
+            ),
+          ].length,
+        };
+      })
+    );
+  } catch (err) {
+    console.log(err);
+    return [];
   }
 };

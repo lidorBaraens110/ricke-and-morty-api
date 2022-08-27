@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { getCharacterByName } from "../../api";
-
+import { fetchCharacterData } from "../../helper";
+import { IBarState } from "../../model/characterModel";
+import Loader from "../Loader/Loaderr";
+import "./characterbar.css";
 const charactersArr = [
   "Rick Sanchez",
   "Summer Smith",
@@ -10,48 +13,46 @@ const charactersArr = [
 ];
 
 const CharacterBar = (): JSX.Element => {
-  const [characters, setCharacter] = useState<
-    {
-      name: string;
-      episodeLength: any;
-    }[]
-  >([]);
-
+  const [characters, setCharacter] = useState<IBarState[]>([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const fetchCharacterData = async () => {
-      const characterOrdered = await Promise.all(
-        charactersArr.map(async (name) => {
-          const { data } = await getCharacterByName(name);
-          return {
-            name,
-            episodeLength: [
-              ...new Set(
-                data?.results?.reduce((acc: string[], val) => {
-                  acc.push(...val.episode);
-                  return acc;
-                }, [])
-              ),
-            ].length,
-          };
-        })
-      );
-      setCharacter(characterOrdered);
+    const setCharacterData = async () => {
+      setCharacter(await fetchCharacterData(charactersArr));
+      setLoading(false);
     };
-    fetchCharacterData();
+    setCharacterData();
   }, []);
 
   return (
-    <div className="wrap-bar">
-      <div>hello bar</div>
-
-      {characters?.map((char, i) => {
-        return (
-          <div key={i}>
-            {char.name} {char.episodeLength}
-          </div>
-        );
-      })}
-    </div>
+    <>
+      <h1>hello bar</h1>
+      <div className="bar-container">
+        {loading ? (
+          <Loader />
+        ) : characters ? (
+          <ul className="wrap-bar">
+            {characters.map((char, i) => {
+              return (
+                <li key={i}>
+                  <div className="wrap-detail">
+                    <p>{char.name}</p>
+                    <div
+                      className="bar-height"
+                      style={{ height: char.episodeLength * 3 }}
+                    >
+                      <p>{char.episodeLength}</p>
+                    </div>
+                  </div>
+                  <img src={char.img} alt="" height={"auto"} width={"100%"} />
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          "no data recive"
+        )}
+      </div>
+    </>
   );
 };
 

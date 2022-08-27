@@ -4,3 +4,9 @@ export interface IUnpopularCharacterFromEarth {
   originDimenssion: string | undefined;
   poplurity: number | undefined;
 }
+
+export interface IBarState {
+  name: string;
+  episodeLength: any;
+  img: string;
+}

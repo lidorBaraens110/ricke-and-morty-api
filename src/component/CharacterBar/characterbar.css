@@ -1,0 +1,37 @@
+.bar-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+}
+
+.wrap-bar{
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap:20px;
+    padding:0px;
+}
+.wrap-detail{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    flex: 1;
+}
+li{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    list-style-type: none;
+    height: 300px;
+    flex:1;
+    background-color: #f6f6f6;
+    text-align: center;
+}
+.bar-height{
+    width: 100%;
+    background-color: aqua;
+}
