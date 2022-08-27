@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { ICharacters } from "../model/axiosModel";
+import { IFetchCharacters, IFetchLocationById } from "../model/axiosModel";
 
 const characterInstance = axios.create({
   baseURL: "https://rickandmortyapi.com/api/character",
@@ -16,8 +16,9 @@ const epsisodeInstance = axios.create({
 
 const getCharacterById = (id: string) => characterInstance.get(`/${id}`);
 const getCharacterByPage = (page: string) =>
-  characterInstance.get<ICharacters>(`/?page=${page}`);
-const getLocationById = (id: string) => locationInstance.get(`/${id}`);
+  characterInstance.get<IFetchCharacters>(`/?page=${page}`);
+const getLocationById = (id: string) =>
+  locationInstance.get<IFetchLocationById>(`/${id}`);
 const getEpisodeById = (id: string) => epsisodeInstance.get(`/${id}`);
 
 //-- get unmostPopular character from earth (appears in as few episodes as possible)

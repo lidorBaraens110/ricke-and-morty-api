@@ -1,21 +1,43 @@
 import { getCharacterByPage } from "../api";
-import { ICharacterResults } from "../model/axiosModel";
+import { ICharacterResults, IFetchLocationById } from "../model/axiosModel";
+import axios from "axios";
+import { IUnpopularCharacterFromEarth } from "../model/characterModel";
 
-export const getUnpopularCharacterFromEarth = async () => {
-  const earthCharacters: ICharacterResults[] = [];
-  const charactersFromEarth = await getCharactersFromEarth(1, earthCharacters);
-  return charactersFromEarth?.reduce((acc, val) => {
-    if (acc?.episode?.length > val?.episode?.length) {
-      return val;
+export const getUnpopularCharacterFromEarth =
+  async (): Promise<IUnpopularCharacterFromEarth> => {
+    const earthCharacters: ICharacterResults[] = [];
+    const charactersFromEarth = await getCharactersFromEarth(
+      1,
+      earthCharacters
+    );
+    const unpopularCharacterFromEarth = charactersFromEarth?.reduce(
+      (acc, val) => {
+        if (acc?.episode?.length > val?.episode?.length) {
+          return val;
+        }
+        return acc;
+      },
+      earthCharacters[0]
+    );
+    let dimension;
+    if (unpopularCharacterFromEarth?.origin?.url) {
+      const { data } = await axios.get<IFetchLocationById>(
+        unpopularCharacterFromEarth?.origin?.url
+      );
+      dimension = data?.dimension;
     }
-    return acc;
-  }, earthCharacters[0]);
-};
+    return {
+      characterName: unpopularCharacterFromEarth?.name,
+      originName: unpopularCharacterFromEarth?.origin.name,
+      originDimenssion: dimension,
+      poplurity: unpopularCharacterFromEarth?.episode.length,
+    };
+  };
 
 const getCharactersFromEarth = async (
   currentPage: number,
   earthCharacters: ICharacterResults[]
-) => {
+): Promise<ICharacterResults[] | undefined> => {
   try {
     const { data } = await getCharacterByPage(currentPage.toString());
     const onlyFromEarthOrigin = data?.results?.filter(

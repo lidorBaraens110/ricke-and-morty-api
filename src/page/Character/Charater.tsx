@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
+import CharacterTable from "../../component/CharacterTable/CharacterTable";
 import Loader from "../../component/Loader/loader";
 import { getUnpopularCharacterFromEarth } from "../../helper";
-import { ICharacterResults } from "../../model/axiosModel";
+import { IUnpopularCharacterFromEarth } from "../../model/characterModel";
 import "./character.css";
 
 const CharacterFromEarth = (): JSX.Element => {
-  const [earthCharacter, setEarthCharacter] = useState<ICharacterResults>();
+  const [earthCharacter, setEarthCharacter] =
+    useState<IUnpopularCharacterFromEarth>();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       setEarthCharacter(await getUnpopularCharacterFromEarth());
-      console.log("gere");
       setLoading(false);
     };
     fetchData();
@@ -22,7 +23,7 @@ const CharacterFromEarth = (): JSX.Element => {
       <div className="wrap-table">
         {!loading ? (
           earthCharacter ? (
-            <ul>{earthCharacter?.name}</ul>
+            <CharacterTable {...earthCharacter} />
           ) : (
             "fetch data failed"
           )

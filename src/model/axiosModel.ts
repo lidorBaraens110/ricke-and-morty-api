@@ -1,4 +1,4 @@
-export interface ICharacters {
+export interface IFetchCharacters {
   info: {
     count: number;
     pages: number;
@@ -9,11 +9,11 @@ export interface ICharacters {
   url: string;
   created: Date;
 }
-interface IOrigin {
+interface IOriginCharacter {
   name: string;
   url: string;
 }
-interface ILocation extends IOrigin {}
+interface ILocationCharacter extends IOriginCharacter {}
 export interface ICharacterResults {
   id: number;
   name: string;
@@ -21,8 +21,18 @@ export interface ICharacterResults {
   species: string;
   type: string;
   gender: string;
-  origin: IOrigin;
-  location: ILocation;
+  origin: IOriginCharacter;
+  location: ILocationCharacter;
   image: string;
   episode: string[];
+}
+
+export interface IFetchLocationById {
+  id: number;
+  name: string;
+  type: string;
+  dimension: string;
+  residents: string[];
+  url: string;
+  created: Date;
 }
