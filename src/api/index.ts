@@ -16,7 +16,7 @@ const epsisodeInstance = axios.create({
 
 const getCharacterById = (id: string) => characterInstance.get(`/${id}`);
 const getCharacterByName = (name: string) =>
-  characterInstance.get<IFetchCharacters>(`/?name=${name}`);
+  characterInstance.get<IFetchCharacters>(`/?name=${name}&status=alive`);
 const getCharacterByPage = (page: string) =>
   characterInstance.get<IFetchCharacters>(`/?page=${page}`);
 const getLocationById = (id: string) =>

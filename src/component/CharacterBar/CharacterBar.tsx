@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getCharacterByName } from "../../api";
 
 const charactersArr = [
   "Rick Sanchez",
@@ -9,9 +10,49 @@ const charactersArr = [
 ];
 
 const CharacterBar = (): JSX.Element => {
-  const [characters, setCharacter] = useState([]);
+  const [characters, setCharacter] = useState<
+    {
+      name: string;
+      episodeLength: any;
+    }[]
+  >([]);
 
-  return <div>hello bar</div>;
+  useEffect(() => {
+    const fetchCharacterData = async () => {
+      const characterOrdered = await Promise.all(
+        charactersArr.map(async (name) => {
+          const { data } = await getCharacterByName(name);
+          return {
+            name,
+            episodeLength: [
+              ...new Set(
+                data?.results?.reduce((acc: string[], val) => {
+                  acc.push(...val.episode);
+                  return acc;
+                }, [])
+              ),
+            ].length,
+          };
+        })
+      );
+      setCharacter(characterOrdered);
+    };
+    fetchCharacterData();
+  }, []);
+
+  return (
+    <div className="wrap-bar">
+      <div>hello bar</div>
+
+      {characters?.map((char, i) => {
+        return (
+          <div key={i}>
+            {char.name} {char.episodeLength}
+          </div>
+        );
+      })}
+    </div>
+  );
 };
 
 export default CharacterBar;
